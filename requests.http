@@ -1,0 +1,88 @@
+# Get all agents.
+
+GET http://localhost:9080/players-app/api/agents
+
+###
+
+# Get single agent existing.
+
+GET http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4
+
+###
+
+# Get single agent. Not existing, created later.
+
+GET http://localhost:9080/players-app/api/agents/3c6f1eb1-8069-44ab-988f-d7fed2b65d87
+
+###
+
+# Create new agent.
+
+PUT http://localhost:9080/players-app/api/agents/3c6f1eb1-8069-44ab-988f-d7fed2b65d87
+Content-Type: application/json
+
+{
+  "login": "kuchar123",
+  "name": "Cezary",
+  "surname": "Kucharski",
+  "age": 56,
+  "active": true,
+  "email": "cez_kuch@example.com",
+  "password": "123123"
+}
+
+###
+
+# Get single agent portrait. Not existing, created later.
+
+GET http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4/portrait
+
+###
+
+# Create agent portrait.
+
+PUT http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4/portrait
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="portrait"; filename="fabrizio.png'
+
+< players-app/src/main/resources/pl/edu/pg/eti/kask/configuration/avatar/fabrizio.png
+--boundary--
+
+###
+
+# Update agent portrait.
+
+PATCH http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4/portrait
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="portrait"; filename="zahavi.png'
+
+< players-app/src/main/resources/pl/edu/pg/eti/kask/configuration/avatar/zahavi.png
+--boundary--
+
+###
+
+# Update agent.
+
+PATCH http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4
+Content-Type: application/json
+
+{
+  "name": "Sir Fabrizio",
+  "active": false
+}
+
+###
+
+# Delete agent.
+
+DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4
+
+###
+
+# Delete agent portrait.
+
+DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4/portrait
