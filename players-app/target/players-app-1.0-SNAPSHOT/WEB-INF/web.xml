@@ -17,4 +17,8 @@
         <listener-class>pl.edu.pg.eti.kask.configuration.listener.CreateControllers</listener-class>
     </listener>
 
+    <context-param>
+        <param-name>portraitStore</param-name>
+        <param-value>portraitStore</param-value>
+    </context-param>
 </web-app>

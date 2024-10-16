@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.configuration.listener;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -18,7 +19,8 @@ public class CreateServices implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         DataStore dataSource = (DataStore) event.getServletContext().getAttribute("datasource");
 
-        Path portraitStore = Path.of("players-app/src/main/java/pl/edu/pg/eti/kask/datastore/portraitStore");
+        ServletContext context = event.getServletContext();
+        Path portraitStore = Path.of(context.getInitParameter("portraitStore"));
 
         AgentRepository userRepository = new AgentInMemoryRepository(dataSource);
 

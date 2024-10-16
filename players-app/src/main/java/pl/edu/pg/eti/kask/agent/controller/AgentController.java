@@ -68,7 +68,7 @@ public class AgentController {
                     if (agent.getPortrait() == null) throw new NotFoundException("No portrait for this agent.");
                     return service.getAgentPortrait(id);
                 })
-                .orElseThrow(() -> new RuntimeException("No agent found"));
+                .orElseThrow(() -> new NotFoundException("No agent found"));
     }
 
     public void putAgentPortrait(UUID id, InputStream portrait) {
