@@ -1,27 +1,28 @@
-package pl.edu.pg.eti.kask.agent.controller;
+package pl.edu.pg.eti.kask.agent.controller.simple;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import pl.edu.pg.eti.kask.agent.controller.api.AgentController;
 import pl.edu.pg.eti.kask.agent.dto.GetAgentResponse;
 import pl.edu.pg.eti.kask.agent.dto.GetAgentsResponse;
 import pl.edu.pg.eti.kask.agent.dto.PatchAgentRequest;
 import pl.edu.pg.eti.kask.agent.dto.PutAgentRequest;
-import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.service.AgentService;
 import pl.edu.pg.eti.kask.component.DtoFunctionFactory;
 import pl.edu.pg.eti.kask.controller.servlet.exception.NotFoundException;
 import pl.edu.pg.eti.kask.controller.servlet.exception.BadRequestException;
-import pl.edu.pg.eti.kask.controller.servlet.exception.HttpRequestException;
 
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.UUID;
 
-public class AgentController {
+@RequestScoped
+public class AgentSimpleController implements AgentController {
     private final AgentService service;
     private final DtoFunctionFactory factory;
 
-    public AgentController(AgentService service, DtoFunctionFactory factory) {
+    @Inject
+    public AgentSimpleController(AgentService service, DtoFunctionFactory factory) {
         this.service = service;
         this.factory = factory;
     }

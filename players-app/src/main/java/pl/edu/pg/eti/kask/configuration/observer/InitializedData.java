@@ -1,28 +1,41 @@
-package pl.edu.pg.eti.kask.configuration.listener;
+package pl.edu.pg.eti.kask.configuration.observer;
 
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.control.RequestContextController;
+import jakarta.inject.Inject;
 import lombok.SneakyThrows;
+import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.context.Initialized;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.service.AgentService;
 
 import java.io.InputStream;
 import java.util.UUID;
 
-@WebListener
-public class InitializedData implements ServletContextListener {
+@ApplicationScoped
+public class InitializedData {
     
-    private AgentService agentService;
+    private final AgentService agentService;
+    private final RequestContextController requestContextController;
 
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        agentService = (AgentService) event.getServletContext().getAttribute("agentService");
+    @Inject
+    public InitializedData(
+            AgentService agentService,
+            RequestContextController requestContextController
+    ) {
+        this.agentService = agentService;
+        this.requestContextController = requestContextController;
+    }
+
+    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
         init();
     }
 
+
     @SneakyThrows
     private void init() {
+        requestContextController.activate();
+
         Agent raiola = Agent.builder()
                 .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
                 .login("mino123")
@@ -71,6 +84,8 @@ public class InitializedData implements ServletContextListener {
         agentService.create(zahavi);
         agentService.create(romano);
         agentService.create(struth);
+
+        requestContextController.deactivate();
     }
 
     @SneakyThrows

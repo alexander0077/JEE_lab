@@ -1,5 +1,7 @@
 package pl.edu.pg.eti.kask.agent.repository.memory;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.datastore.component.DataStore;
@@ -7,12 +9,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+@RequestScoped
 public class AgentInMemoryRepository implements AgentRepository {
 
 
     private final DataStore store;
 
+    @Inject
     public AgentInMemoryRepository(DataStore store) {
         this.store = store;
     }

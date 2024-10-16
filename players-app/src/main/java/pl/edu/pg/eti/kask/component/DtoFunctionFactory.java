@@ -1,9 +1,10 @@
 package pl.edu.pg.eti.kask.component;
 
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.edu.pg.eti.kask.agent.dto.function.*;
 
-
+@ApplicationScoped
 public class DtoFunctionFactory {
 
     public RequestToAgentFunction requestToAgent() {

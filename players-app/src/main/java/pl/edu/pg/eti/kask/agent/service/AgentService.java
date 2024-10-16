@@ -1,7 +1,9 @@
 package pl.edu.pg.eti.kask.agent.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
-import pl.edu.pg.eti.kask.controller.servlet.exception.NotFoundException;
 import pl.edu.pg.eti.kask.crypto.component.Pbkdf2PasswordHash;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 
@@ -15,17 +17,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class AgentService {
 
     private final AgentRepository repository;
     private final Pbkdf2PasswordHash passwordHash;
     private final Path portraitStorePath;
 
-    public AgentService(AgentRepository repository, Pbkdf2PasswordHash passwordHash, Path portraitStorePath) {
+    @Inject
+    public AgentService(AgentRepository repository, Pbkdf2PasswordHash passwordHash) {
         this.repository = repository;
         this.passwordHash = passwordHash;
-        this.portraitStorePath = portraitStorePath;
+        this.portraitStorePath = Path.of("portraitStore");
     }
 
     public Optional<Agent> find(UUID id) {

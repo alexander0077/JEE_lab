@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.controller.servlet;
 
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -8,9 +9,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pl.edu.pg.eti.kask.agent.controller.api.AgentController;
 import pl.edu.pg.eti.kask.agent.dto.PatchAgentRequest;
 import pl.edu.pg.eti.kask.agent.dto.PutAgentRequest;
-import pl.edu.pg.eti.kask.agent.controller.AgentController;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
 @MultipartConfig(maxFileSize = 200 * 1024)
 public class ApiServlet extends HttpServlet {
 
-    private AgentController agentController;
+    private final AgentController agentController;
 
     public static final class Paths {
         public static final String API = "/api";
@@ -38,6 +39,12 @@ public class ApiServlet extends HttpServlet {
 
     private final Jsonb jsonb = JsonbBuilder.create();
 
+    @Inject
+    public ApiServlet(AgentController agentController) {
+        this.agentController = agentController;
+    }
+
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equals("PATCH")) {
@@ -45,12 +52,6 @@ public class ApiServlet extends HttpServlet {
         } else {
             super.service(request, response);
         }
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        agentController = (AgentController) getServletContext().getAttribute("agentController");
     }
 
     @SuppressWarnings("RedundantThrows")
