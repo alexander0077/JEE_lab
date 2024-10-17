@@ -86,3 +86,81 @@ DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afc
 # Delete agent portrait.
 
 DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4/portrait
+
+### PLAYER REQUESTS HERE ##################################
+
+# Get all players.
+
+GET http://localhost:9080/players-app/api/players
+
+###
+
+# Get single player existing.
+
+GET http://localhost:9080/players-app/api/players/def6a96f-9a8d-4a06-b0b5-5f2d4f01e9ac
+
+###
+
+# Get single player. Not existing, created later.
+
+GET http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+
+###
+
+# Create new player.
+
+PUT http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+Content-Type: application/json
+
+{
+  "team": "a8217a53-9dec-4f57-ab31-5c47e20f0262",
+  "name": "Wojciech",
+  "surname": "Szczęsny",
+  "shirtNumber": 25,
+  "position": "goalkeeper"
+}
+
+###
+
+# Delete existing player.
+
+DELETE http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+
+###
+
+# Update player.
+
+PATCH http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+Content-Type: application/json
+
+{
+  "name": "Sir Wojciech",
+  "shirtNumber": 1,
+  "position": "striker"
+}
+
+###
+
+# Get existing team players.
+
+GET http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players
+
+###
+
+# Get not existing team players.
+
+GET http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0122/players
+
+###
+
+# Get all teams.
+
+GET http://localhost:9080/players-app/api/teams
+
+###
+
+# Get existing team.
+
+GET http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262
+
+###

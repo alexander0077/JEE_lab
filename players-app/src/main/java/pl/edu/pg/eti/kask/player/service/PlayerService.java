@@ -1,5 +1,8 @@
 package pl.edu.pg.eti.kask.player.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
 import pl.edu.pg.eti.kask.player.entity.Player;
@@ -10,12 +13,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class PlayerService {
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
-
     private final AgentRepository agentRepository;
-    
+
+    @Inject
     public PlayerService(PlayerRepository playerRepository, TeamRepository teamRepository, AgentRepository agentRepository) {
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;

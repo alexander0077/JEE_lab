@@ -20,5 +20,4 @@ public class Team implements Serializable {
     private String name;
     private int budget;
     private boolean isProfessional;
-    private List<Player> players;
 }

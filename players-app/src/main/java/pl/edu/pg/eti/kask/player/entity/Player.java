@@ -20,7 +20,7 @@ public class Player implements Serializable {
     private String name;
     private String surname;
     private int shirtNumber;
-    private PositionTypes position;
+    private String position;
     private Team team;
     private Agent agent;
 }

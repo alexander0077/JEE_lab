@@ -8,22 +8,34 @@ import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.context.Initialized;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.service.AgentService;
+import pl.edu.pg.eti.kask.player.entity.Player;
+import pl.edu.pg.eti.kask.player.entity.PositionTypes;
+import pl.edu.pg.eti.kask.player.service.PlayerService;
+import pl.edu.pg.eti.kask.team.entity.Team;
+import pl.edu.pg.eti.kask.team.service.TeamService;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
 public class InitializedData {
     
     private final AgentService agentService;
+    private final PlayerService playerService;
+    private final TeamService teamService;
     private final RequestContextController requestContextController;
 
     @Inject
     public InitializedData(
             AgentService agentService,
+            PlayerService playerService,
+            TeamService teamService,
             RequestContextController requestContextController
     ) {
         this.agentService = agentService;
+        this.playerService = playerService;
+        this.teamService = teamService;
         this.requestContextController = requestContextController;
     }
 
@@ -84,6 +96,64 @@ public class InitializedData {
         agentService.create(zahavi);
         agentService.create(romano);
         agentService.create(struth);
+
+        Team barcelona = Team.builder()
+                .id(UUID.fromString("a8217a53-9dec-4f57-ab31-5c47e20f0262"))
+                .name("FC Barcelona")
+                .isProfessional(true)
+                .budget(200000000)
+                .build();
+
+        Team mancity = Team.builder()
+                .id(UUID.fromString("3b999cd8-0f1e-4e20-935f-2a7a0a09475b"))
+                .name("Manchester City")
+                .isProfessional(true)
+                .budget(1000000000)
+                .build();
+
+        Player lewandowski = Player.builder()
+                .id(UUID.fromString("def6a96f-9a8d-4a06-b0b5-5f2d4f01e9ac"))
+                .name("Robert")
+                .surname("Lewandowski")
+                .shirtNumber(9)
+                .position(PositionTypes.STRIKER)
+                .team(barcelona)
+                .build();
+
+        Player yamal = Player.builder()
+                .id(UUID.fromString("f1398347-f46b-4ef8-ae75-aa1538e5c21f"))
+                .name("Lamine")
+                .surname("Yamal")
+                .shirtNumber(19)
+                .position(PositionTypes.STRIKER)
+                .team(barcelona)
+                .build();
+
+        Player grealish = Player.builder()
+                .id(UUID.fromString("4c603256-e157-41f2-87a6-f72e3fdc32b0"))
+                .name("Jack")
+                .surname("Grealish")
+                .shirtNumber(10)
+                .position(PositionTypes.MIDFIELDER)
+                .team(mancity)
+                .build();
+
+        Player walker = Player.builder()
+                .id(UUID.fromString("911b42cc-dc42-4100-8f96-f87aa456dde3"))
+                .name("Kyle")
+                .surname("Walker")
+                .shirtNumber(2)
+                .position(PositionTypes.DEFENDER)
+                .team(mancity)
+                .build();
+
+        teamService.create(barcelona);
+        teamService.create(mancity);
+
+        playerService.create(lewandowski);
+        playerService.create(yamal);
+        playerService.create(grealish);
+        playerService.create(walker);
 
         requestContextController.deactivate();
     }
