@@ -9,4 +9,6 @@ public interface TeamController {
     GetTeamsResponse getTeams();
 
     GetTeamResponse getTeam(UUID id);
+
+    void deleteTeam(UUID id);
 }

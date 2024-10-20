@@ -164,3 +164,9 @@ GET http://localhost:9080/players-app/api/teams
 GET http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262
 
 ###
+
+# Delete team.
+
+DELETE http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262
+
+###

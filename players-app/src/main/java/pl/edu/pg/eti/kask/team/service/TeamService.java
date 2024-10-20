@@ -38,4 +38,8 @@ public class TeamService {
         repository.create(team);
     }
 
+    public void delete(Team team) {
+        repository.delete(team);
+    }
+
 }

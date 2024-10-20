@@ -156,6 +156,10 @@ public class ApiServlet extends HttpServlet {
                 UUID uuid = extractUuid(Patterns.PLAYER, path);
                 playerController.deletePlayer(uuid);
                 return;
+            } else if (path.matches(Patterns.TEAM.pattern())) {
+                UUID uuid = extractUuid(Patterns.TEAM, path);
+                teamController.deleteTeam(uuid);
+                return;
             } else if (path.matches(Patterns.AGENT_PORTRAIT.pattern())) {
                 UUID uuid = extractUuid(Patterns.AGENT_PORTRAIT, path);
                 agentController.deleteAgentPortrait(uuid);

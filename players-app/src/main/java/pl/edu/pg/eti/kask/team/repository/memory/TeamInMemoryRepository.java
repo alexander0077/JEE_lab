@@ -37,8 +37,8 @@ public class TeamInMemoryRepository implements TeamRepository {
     }
 
     @Override
-    public void delete(Team entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+    public void delete(Team team) {
+        store.deleteTeam(team.getId());
     }
 
     @Override

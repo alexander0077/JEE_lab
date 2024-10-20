@@ -94,6 +94,16 @@ public class DataStore {
         }
     }
 
+    public synchronized void deleteTeam(UUID id) throws IllegalArgumentException {
+        this.findAllPlayers().stream()
+                .filter(player -> player.getTeam().getId().equals(id))
+                .forEach(player -> this.deletePlayer(player.getId()));
+
+        if (!teams.removeIf(team -> team.getId().equals(id))) {
+            throw new IllegalArgumentException("The team with id \"%s\" does not exist".formatted(id));
+        }
+    }
+
     private Player cloneWithRelationships(Player value) {
         Player entity = cloningUtility.clone(value);
 
@@ -113,5 +123,4 @@ public class DataStore {
 
         return entity;
     }
-
 }

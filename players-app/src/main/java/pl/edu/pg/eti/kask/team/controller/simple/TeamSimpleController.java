@@ -33,4 +33,13 @@ public class TeamSimpleController implements TeamController {
                 .orElseThrow(NotFoundException::new);
     }
 
+    @Override
+    public void deleteTeam(UUID id) {
+        service.find(id).ifPresentOrElse(
+                service::delete,
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
+    }
 }
