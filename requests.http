@@ -79,13 +79,20 @@ Content-Type: application/json
 
 # Delete agent.
 
-DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4
+DELETE http://localhost:9080/players-app/api/agents/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6
 
 ###
 
 # Delete agent portrait.
 
 DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afcb785cea4/portrait
+
+###
+
+# Get existing agent players.
+
+GET http://localhost:9080/players-app/api/agents/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6/players
+
 
 ### PLAYER REQUESTS HERE ##################################
 

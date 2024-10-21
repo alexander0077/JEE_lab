@@ -118,6 +118,7 @@ public class InitializedData {
                 .shirtNumber(9)
                 .position(PositionTypes.STRIKER)
                 .team(barcelona)
+                .agent(zahavi)
                 .build();
 
         Player yamal = Player.builder()
@@ -127,6 +128,7 @@ public class InitializedData {
                 .shirtNumber(19)
                 .position(PositionTypes.STRIKER)
                 .team(barcelona)
+                .agent(raiola)
                 .build();
 
         Player grealish = Player.builder()
@@ -136,6 +138,7 @@ public class InitializedData {
                 .shirtNumber(10)
                 .position(PositionTypes.MIDFIELDER)
                 .team(mancity)
+                .agent(raiola)
                 .build();
 
         Player walker = Player.builder()
@@ -145,6 +148,7 @@ public class InitializedData {
                 .shirtNumber(2)
                 .position(PositionTypes.DEFENDER)
                 .team(mancity)
+                .agent(romano)
                 .build();
 
         teamService.create(barcelona);

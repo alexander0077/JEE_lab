@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.player.dto.function;
 
+import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.player.dto.PutPlayerRequest;
 import pl.edu.pg.eti.kask.player.entity.Player;
 import pl.edu.pg.eti.kask.team.entity.Team;
@@ -18,6 +19,9 @@ public class RequestToPlayerFunction implements BiFunction<UUID, PutPlayerReques
                 .position(request.getPosition())
                 .team(Team.builder()
                         .id(request.getTeam())
+                        .build())
+                .agent(Agent.builder()
+                        .id(request.getAgent())
                         .build())
                 .build();
     }

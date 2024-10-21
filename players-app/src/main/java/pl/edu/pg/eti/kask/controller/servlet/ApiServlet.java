@@ -41,6 +41,7 @@ public class ApiServlet extends HttpServlet {
         public static final Pattern AGENTS = Pattern.compile("/agents/?");
         public static final Pattern AGENT = Pattern.compile("/agents/(%s)".formatted(UUID.pattern()));
         public static final Pattern AGENT_PORTRAIT = Pattern.compile("/agents/(%s)/portrait".formatted(UUID.pattern()));
+        public static final Pattern AGENT_PLAYERS = Pattern.compile("/agents/(%s)/players/?".formatted(UUID.pattern()));
         public static final Pattern PLAYERS = Pattern.compile("/players/?");
         public static final Pattern PLAYER = Pattern.compile("/players/(%s)".formatted(UUID.pattern()));
         public static final Pattern TEAMS = Pattern.compile("/teams/?");
@@ -96,6 +97,11 @@ public class ApiServlet extends HttpServlet {
                 response.setContentType("application/json");
                 UUID uuid = extractUuid(Patterns.TEAM_PLAYERS, path);
                 response.getWriter().write(jsonb.toJson(playerController.getTeamPlayers(uuid)));
+                return;
+            } else if (path.matches(Patterns.AGENT_PLAYERS.pattern())) {
+                response.setContentType("application/json");
+                UUID uuid = extractUuid(Patterns.AGENT_PLAYERS, path);
+                response.getWriter().write(jsonb.toJson(playerController.getAgentPlayers(uuid)));
                 return;
             } else if (path.matches(Patterns.AGENT.pattern())) {
                 response.setContentType("application/json");

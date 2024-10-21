@@ -104,6 +104,16 @@ public class DataStore {
         }
     }
 
+    public synchronized void deleteAgent(UUID id) throws IllegalArgumentException {
+        this.findAllPlayers().stream()
+                .filter(player -> player.getAgent().getId().equals(id))
+                .forEach(player -> this.deletePlayer(player.getId()));
+
+        if (!agents.removeIf(agent -> agent.getId().equals(id))) {
+            throw new IllegalArgumentException("The agent with id \"%s\" does not exist".formatted(id));
+        }
+    }
+
     private Player cloneWithRelationships(Player value) {
         Player entity = cloningUtility.clone(value);
 

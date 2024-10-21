@@ -20,6 +20,10 @@ public class PlayerToResponseFunction implements Function<Player, GetPlayerRespo
                         .id(entity.getTeam().getId())
                         .name(entity.getTeam().getName())
                         .build())
+                .agent(GetPlayerResponse.Agent.builder()
+                        .id(entity.getAgent().getId())
+                        .name(entity.getAgent().getName())
+                        .build())
                 .build();
     }
 

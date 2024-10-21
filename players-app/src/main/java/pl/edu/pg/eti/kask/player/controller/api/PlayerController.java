@@ -11,6 +11,7 @@ public interface PlayerController {
     GetPlayersResponse getPlayers();
      
     GetPlayersResponse getTeamPlayers(UUID id);
+    GetPlayersResponse getAgentPlayers(UUID id);
 
     GetPlayerResponse getPlayer(UUID uuid);
     

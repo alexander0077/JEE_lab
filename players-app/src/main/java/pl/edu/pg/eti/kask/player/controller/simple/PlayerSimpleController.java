@@ -37,6 +37,13 @@ public class PlayerSimpleController implements PlayerController {
                 .orElseThrow(NotFoundException::new);
     }
 
+    @Override
+    public GetPlayersResponse getAgentPlayers(UUID id) {
+        return service.findAllByAgent(id)
+                .map(factory.playersToResponse())
+                .orElseThrow(NotFoundException::new);
+    }
+
 
     @Override
     public GetPlayerResponse getPlayer(UUID uuid) {

@@ -39,7 +39,7 @@ public class AgentInMemoryRepository implements AgentRepository {
 
     @Override
     public void delete(Agent entity) {
-        throw new UnsupportedOperationException("Not implemented.");
+        store.deleteAgent(entity.getId());
     }
 
     @Override

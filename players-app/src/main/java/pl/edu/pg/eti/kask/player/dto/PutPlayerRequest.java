@@ -22,6 +22,7 @@ import java.util.UUID;
 
 public class PutPlayerRequest {
     private UUID team;
+    private UUID agent;
     private String name;
     private String surname;
     private int shirtNumber;
