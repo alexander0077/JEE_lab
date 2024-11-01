@@ -103,17 +103,16 @@ GET http://localhost:9080/players-app/api/players/def6a96f-9a8d-4a06-b0b5-5f2d4f
 
 # Get single player. Not existing, created later.
 
-GET http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+GET http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
 
 ###
 
 # Create new player.
 
-PUT http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+PUT http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
 Content-Type: application/json
 
 {
-  "team": "a8217a53-9dec-4f57-ab31-5c47e20f0262",
   "name": "Wojciech",
   "surname": "Szczęsny",
   "shirtNumber": 25,
@@ -128,9 +127,15 @@ DELETE http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e62
 
 ###
 
+# Delete existing player by team.
+
+DELETE http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/def6a96f-9a8d-4a06-b0b5-5f2d4f01e9ac
+
+###
+
 # Update player.
 
-PATCH http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+PATCH http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
 Content-Type: application/json
 
 {
@@ -168,5 +173,42 @@ GET http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f
 # Delete team.
 
 DELETE http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262
+
+###
+
+# Get not existing team.
+
+GET http://localhost:9080/players-app/api/teams/18217a53-9dec-4f57-ab31-5c47e20f0261
+
+###
+
+# Create new team.
+
+PUT http://localhost:9080/players-app/api/teams/18217a53-9dec-4f57-ab31-5c47e20f0261
+Content-Type: application/json
+
+{
+  "name": "Supra Kwidzyn",
+  "budget": 50000,
+  "isProfessional": false
+}
+
+###
+
+# Get a new team.
+
+GET http://localhost:9080/players-app/api/teams/18217a53-9dec-4f57-ab31-5c47e20f0261
+
+###
+
+# Update a team.
+
+PATCH http://localhost:9080/players-app/api/teams/18217a53-9dec-4f57-ab31-5c47e20f0261
+Content-Type: application/json
+
+{
+  "name": "KP Supra Kwidzyn",
+  "budget": 60000
+}
 
 ###

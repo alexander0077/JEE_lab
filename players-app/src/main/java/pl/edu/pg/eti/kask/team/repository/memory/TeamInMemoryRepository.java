@@ -43,7 +43,7 @@ public class TeamInMemoryRepository implements TeamRepository {
 
     @Override
     public void update(Team entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+        store.updateTeam(entity);
     }
 
 }

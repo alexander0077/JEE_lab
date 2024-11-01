@@ -21,7 +21,6 @@ import java.util.UUID;
 @EqualsAndHashCode
 
 public class PutPlayerRequest {
-    private UUID team;
     private String name;
     private String surname;
     private int shirtNumber;

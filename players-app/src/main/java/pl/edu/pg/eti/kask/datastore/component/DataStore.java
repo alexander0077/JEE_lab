@@ -87,7 +87,7 @@ public class DataStore {
     }
 
     public synchronized void updateAgent(Agent value) throws IllegalArgumentException {
-        if (agents.removeIf(player -> player.getId().equals(value.getId()))) {
+        if (agents.removeIf(agent -> agent.getId().equals(value.getId()))) {
             agents.add(cloningUtility.clone(value));
         } else {
             throw new IllegalArgumentException("The agent with id \"%s\" does not exist".formatted(value.getId()));
@@ -101,6 +101,14 @@ public class DataStore {
 
         if (!teams.removeIf(team -> team.getId().equals(id))) {
             throw new IllegalArgumentException("The team with id \"%s\" does not exist".formatted(id));
+        }
+    }
+
+    public synchronized void updateTeam(Team value) throws IllegalArgumentException {
+        if (teams.removeIf(team -> team.getId().equals(value.getId()))) {
+            teams.add(cloningUtility.clone(value));
+        } else {
+            throw new IllegalArgumentException("The team with id \"%s\" does not exist".formatted(value.getId()));
         }
     }
 

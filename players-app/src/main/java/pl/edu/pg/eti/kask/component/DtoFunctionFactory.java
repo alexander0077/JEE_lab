@@ -7,8 +7,10 @@ import pl.edu.pg.eti.kask.player.dto.function.PlayerToResponseFunction;
 import pl.edu.pg.eti.kask.player.dto.function.PlayersToResponseFunction;
 import pl.edu.pg.eti.kask.player.dto.function.RequestToPlayerFunction;
 import pl.edu.pg.eti.kask.player.dto.function.UpdatePlayerWithRequestFunction;
+import pl.edu.pg.eti.kask.team.dto.function.RequestToTeamFunction;
 import pl.edu.pg.eti.kask.team.dto.function.TeamToResponseFunction;
 import pl.edu.pg.eti.kask.team.dto.function.TeamsToResponseFunction;
+import pl.edu.pg.eti.kask.team.dto.function.UpdateTeamWithRequestFunction;
 
 @ApplicationScoped
 public class DtoFunctionFactory {
@@ -38,6 +40,12 @@ public class DtoFunctionFactory {
     }
     public TeamsToResponseFunction teamsToResponse() {
         return new TeamsToResponseFunction();
+    }
+    public UpdateTeamWithRequestFunction updateTeam() {
+        return new UpdateTeamWithRequestFunction();
+    }
+    public RequestToTeamFunction requestToTeam() {
+        return new RequestToTeamFunction();
     }
 
     public PlayerToResponseFunction playerToResponse() {

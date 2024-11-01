@@ -12,7 +12,6 @@ import java.util.UUID;
 @RequestScoped
 public class AgentInMemoryRepository implements AgentRepository {
 
-
     private final DataStore store;
 
     @Inject

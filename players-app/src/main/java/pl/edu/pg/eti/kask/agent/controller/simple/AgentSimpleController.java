@@ -9,9 +9,8 @@ import pl.edu.pg.eti.kask.agent.dto.PatchAgentRequest;
 import pl.edu.pg.eti.kask.agent.dto.PutAgentRequest;
 import pl.edu.pg.eti.kask.agent.service.AgentService;
 import pl.edu.pg.eti.kask.component.DtoFunctionFactory;
-import pl.edu.pg.eti.kask.controller.servlet.exception.NotFoundException;
-import pl.edu.pg.eti.kask.controller.servlet.exception.BadRequestException;
-
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotFoundException;
 
 import java.io.InputStream;
 import java.util.UUID;

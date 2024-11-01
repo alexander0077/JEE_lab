@@ -37,6 +37,9 @@ public class TeamService {
     public void create(Team team) {
         repository.create(team);
     }
+    public void update(Team team) {
+        repository.update(team);
+    }
 
     public void delete(Team team) {
         repository.delete(team);
