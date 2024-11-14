@@ -3,10 +3,12 @@ package pl.edu.pg.eti.kask.player.controller.rest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import pl.edu.pg.eti.kask.component.DtoFunctionFactory;
 import pl.edu.pg.eti.kask.player.controller.api.PlayerController;
 import pl.edu.pg.eti.kask.player.dto.GetPlayerResponse;
@@ -20,8 +22,10 @@ import pl.edu.pg.eti.kask.team.service.TeamService;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class PlayerRestController implements PlayerController {
     private final PlayerService service;
     private final TeamService teamService;
@@ -95,8 +99,12 @@ public class PlayerRestController implements PlayerController {
                     .toString());
 
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex);
+        } catch (TransactionalException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 

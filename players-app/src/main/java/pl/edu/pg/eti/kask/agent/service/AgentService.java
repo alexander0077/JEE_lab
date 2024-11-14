@@ -3,6 +3,7 @@ package pl.edu.pg.eti.kask.agent.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
+import jakarta.transaction.Transactional;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
 import pl.edu.pg.eti.kask.crypto.component.Pbkdf2PasswordHash;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
@@ -52,7 +53,7 @@ public class AgentService {
         repository.delete(repository.find(id).orElseThrow());
     }
 
-
+    @Transactional
     public void create(Agent agent) {
         agent.setPassword(passwordHash.generate(agent.getPassword().toCharArray()));
         repository.create(agent);
