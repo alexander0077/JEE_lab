@@ -39,6 +39,7 @@ public class TeamPersistenceRepository implements TeamRepository {
         /* Clearing cache used as workaround when not handling both sides of relationships, not recommended. */
 //        em.getEntityManagerFactory().getCache().evictAll(); //Clearing 2nd level cache.
 //        em.clear(); //Clearing 1st level cache.
+        em.refresh(em.find(Team.class, team.getId()));
         em.remove(em.find(Team.class, team.getId()));
 
     }

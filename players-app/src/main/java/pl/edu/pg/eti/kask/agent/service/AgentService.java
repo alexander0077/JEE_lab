@@ -45,10 +45,12 @@ public class AgentService {
         return repository.findAll();
     }
 
+    @Transactional
     public void update(Agent agent) {
         repository.update(agent);
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }

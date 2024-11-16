@@ -39,6 +39,7 @@ public class AgentPersistenceRepository implements AgentRepository {
 
     @Override
     public void delete(Agent entity) {
+        em.refresh(em.find(Agent.class, entity.getId()));
         em.remove(em.find(Agent.class, entity.getId()));
     }
 

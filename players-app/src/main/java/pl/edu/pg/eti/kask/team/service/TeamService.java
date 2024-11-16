@@ -50,6 +50,7 @@ public class TeamService {
         repository.update(team);
     }
 
+    @Transactional
     public void delete(Team team) {
         repository.delete(team);
     }

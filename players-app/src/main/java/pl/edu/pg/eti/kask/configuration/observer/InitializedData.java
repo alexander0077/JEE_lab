@@ -48,112 +48,114 @@ public class InitializedData {
     private void init() {
         requestContextController.activate();
 
-        Agent raiola = Agent.builder()
-                .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
-                .login("mino123")
-                .name("Mino")
-                .surname("Raiola")
-                .age(57)
-                .active(false)
-                .email("minoraiola@example.com")
-                .password("minopass")
-                .build();
+        if (agentService.findAll().isEmpty()) {
+            Agent raiola = Agent.builder()
+                    .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
+                    .login("mino123")
+                    .name("Mino")
+                    .surname("Raiola")
+                    .age(57)
+                    .active(false)
+                    .email("minoraiola@example.com")
+                    .password("minopass")
+                    .build();
 
-        Agent zahavi = Agent.builder()
-                .id(UUID.fromString("b1c02c36-8af1-439d-8864-20ef79849482"))
-                .login("pini123")
-                .name("Pini")
-                .surname("Zahavi")
-                .age(82)
-                .active(true)
-                .email("pinizahavi@example.com")
-                .password("pinipass")
-                .build();
+            Agent zahavi = Agent.builder()
+                    .id(UUID.fromString("b1c02c36-8af1-439d-8864-20ef79849482"))
+                    .login("pini123")
+                    .name("Pini")
+                    .surname("Zahavi")
+                    .age(82)
+                    .active(true)
+                    .email("pinizahavi@example.com")
+                    .password("pinipass")
+                    .build();
 
-        Agent romano = Agent.builder()
-                .id(UUID.fromString("6aee5e1d-bf0f-4936-85fd-9afcb785cea4"))
-                .login("fabrizio123")
-                .name("Fabrizio")
-                .surname("Romano")
-                .age(31)
-                .active(true)
-                .email("fabrizio.romano@example.com")
-                .password("herewego")
-                .build();
+            Agent romano = Agent.builder()
+                    .id(UUID.fromString("6aee5e1d-bf0f-4936-85fd-9afcb785cea4"))
+                    .login("fabrizio123")
+                    .name("Fabrizio")
+                    .surname("Romano")
+                    .age(31)
+                    .active(true)
+                    .email("fabrizio.romano@example.com")
+                    .password("herewego")
+                    .build();
 
-        Agent struth = Agent.builder()
-                .id(UUID.fromString("cbddcea6-4f49-4806-ac45-9f94ff976ef1"))
-                .login("best_football_agent")
-                .name("Volker")
-                .surname("Struth")
-                .age(58)
-                .active(true)
-                .email("struth123@example.com")
-                .password("password321")
-                .build();
+            Agent struth = Agent.builder()
+                    .id(UUID.fromString("cbddcea6-4f49-4806-ac45-9f94ff976ef1"))
+                    .login("best_football_agent")
+                    .name("Volker")
+                    .surname("Struth")
+                    .age(58)
+                    .active(true)
+                    .email("struth123@example.com")
+                    .password("password321")
+                    .build();
 
-        agentService.create(raiola);
-        agentService.create(zahavi);
-        agentService.create(romano);
-        agentService.create(struth);
+            agentService.create(raiola);
+            agentService.create(zahavi);
+            agentService.create(romano);
+            agentService.create(struth);
 
-        Team barcelona = Team.builder()
-                .id(UUID.fromString("a8217a53-9dec-4f57-ab31-5c47e20f0262"))
-                .name("FC Barcelona")
-                .isProfessional(true)
-                .budget(200000000)
-                .build();
+            Team barcelona = Team.builder()
+                    .id(UUID.fromString("a8217a53-9dec-4f57-ab31-5c47e20f0262"))
+                    .name("FC Barcelona")
+                    .isProfessional(true)
+                    .budget(200000000)
+                    .build();
 
-        Team mancity = Team.builder()
-                .id(UUID.fromString("3b999cd8-0f1e-4e20-935f-2a7a0a09475b"))
-                .name("Manchester City")
-                .isProfessional(true)
-                .budget(1000000000)
-                .build();
+            Team mancity = Team.builder()
+                    .id(UUID.fromString("3b999cd8-0f1e-4e20-935f-2a7a0a09475b"))
+                    .name("Manchester City")
+                    .isProfessional(true)
+                    .budget(1000000000)
+                    .build();
 
-        Player lewandowski = Player.builder()
-                .id(UUID.fromString("def6a96f-9a8d-4a06-b0b5-5f2d4f01e9ac"))
-                .name("Robert")
-                .surname("Lewandowski")
-                .shirtNumber(9)
-                .position(PositionTypes.STRIKER)
-                .team(barcelona)
-                .build();
+            Player lewandowski = Player.builder()
+                    .id(UUID.fromString("def6a96f-9a8d-4a06-b0b5-5f2d4f01e9ac"))
+                    .name("Robert")
+                    .surname("Lewandowski")
+                    .shirtNumber(9)
+                    .position(PositionTypes.STRIKER)
+                    .team(barcelona)
+                    .build();
 
-        Player yamal = Player.builder()
-                .id(UUID.fromString("f1398347-f46b-4ef8-ae75-aa1538e5c21f"))
-                .name("Lamine")
-                .surname("Yamal")
-                .shirtNumber(19)
-                .position(PositionTypes.STRIKER)
-                .team(barcelona)
-                .build();
+            Player yamal = Player.builder()
+                    .id(UUID.fromString("f1398347-f46b-4ef8-ae75-aa1538e5c21f"))
+                    .name("Lamine")
+                    .surname("Yamal")
+                    .shirtNumber(19)
+                    .position(PositionTypes.STRIKER)
+                    .team(barcelona)
+                    .build();
 
-        Player grealish = Player.builder()
-                .id(UUID.fromString("4c603256-e157-41f2-87a6-f72e3fdc32b0"))
-                .name("Jack")
-                .surname("Grealish")
-                .shirtNumber(10)
-                .position(PositionTypes.MIDFIELDER)
-                .team(mancity)
-                .build();
+            Player grealish = Player.builder()
+                    .id(UUID.fromString("4c603256-e157-41f2-87a6-f72e3fdc32b0"))
+                    .name("Jack")
+                    .surname("Grealish")
+                    .shirtNumber(10)
+                    .position(PositionTypes.MIDFIELDER)
+                    .team(mancity)
+                    .build();
 
-        Player walker = Player.builder()
-                .id(UUID.fromString("911b42cc-dc42-4100-8f96-f87aa456dde3"))
-                .name("Kyle")
-                .surname("Walker")
-                .shirtNumber(2)
-                .position(PositionTypes.DEFENDER)
-                .team(mancity)
-                .build();
+            Player walker = Player.builder()
+                    .id(UUID.fromString("911b42cc-dc42-4100-8f96-f87aa456dde3"))
+                    .name("Kyle")
+                    .surname("Walker")
+                    .shirtNumber(2)
+                    .position(PositionTypes.DEFENDER)
+                    .team(mancity)
+                    .build();
 
-        teamService.create(barcelona);
-        teamService.create(mancity);
+            teamService.create(barcelona);
+            teamService.create(mancity);
 
-        playerService.create(lewandowski);
-        playerService.create(yamal);
-        playerService.create(grealish);
-        playerService.create(walker);
+            playerService.create(lewandowski);
+            playerService.create(yamal);
+            playerService.create(grealish);
+            playerService.create(walker);
+        }
 
         requestContextController.deactivate();
     }

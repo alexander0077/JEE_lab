@@ -39,6 +39,7 @@ public class PlayerPersistenceRepository implements PlayerRepository {
 
     @Override
     public void delete(Player entity) {
+        em.refresh(em.find(Player.class, entity.getId()));
         em.remove(em.find(Player.class, entity.getId()));
     }
 

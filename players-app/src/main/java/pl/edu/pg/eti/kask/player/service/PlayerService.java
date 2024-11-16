@@ -49,7 +49,7 @@ public class PlayerService {
         if (playerRepository.find(player.getId()).isPresent()) {
             throw new IllegalArgumentException("Player already exists.");
         }
-        if (playerRepository.find(player.getTeam().getId()).isEmpty()) {
+        if (teamRepository.find(player.getTeam().getId()).isEmpty()) {
             throw new IllegalArgumentException("Teab does not exists.");
         }
 
