@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.player.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -11,15 +12,19 @@ import pl.edu.pg.eti.kask.component.ModelFunctionFactory;
 @Named
 public class PlayerList {
 
-    private final PlayerService service;
+    private PlayerService service;
     private PlayersModel players;
 
     private final ModelFunctionFactory factory;
 
     @Inject
-    public PlayerList(PlayerService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public PlayerList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(PlayerService service) {
+        this.service = service;
     }
 
     public PlayersModel getPlayers() {

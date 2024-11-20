@@ -1,5 +1,7 @@
 package pl.edu.pg.eti.kask.player.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,7 +29,7 @@ import java.util.logging.Level;
 @Path("")
 @Log
 public class PlayerRestController implements PlayerController {
-    private final PlayerService service;
+    private PlayerService service;
     private final TeamService teamService;
     private final DtoFunctionFactory factory;
     private final UriInfo uriInfo;
@@ -39,15 +41,20 @@ public class PlayerRestController implements PlayerController {
     }
 
     @Inject
-    public PlayerRestController(PlayerService service, DtoFunctionFactory factory,
+    public PlayerRestController(DtoFunctionFactory factory,
                                 @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo,
                                 TeamService teamService
     ) {
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
         this.teamService = teamService;
     }
+
+    @EJB
+    public void setService(PlayerService service) {
+        this.service = service;
+    }
+
 
     @Override
     public GetPlayersResponse getPlayers() {
@@ -99,7 +106,7 @@ public class PlayerRestController implements PlayerController {
                     .toString());
 
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (TransactionalException ex) {
+        } catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);

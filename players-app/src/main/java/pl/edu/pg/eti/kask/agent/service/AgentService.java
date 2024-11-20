@@ -1,9 +1,9 @@
 package pl.edu.pg.eti.kask.agent.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
-import jakarta.transaction.Transactional;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
 import pl.edu.pg.eti.kask.crypto.component.Pbkdf2PasswordHash;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class AgentService {
 
@@ -45,17 +46,14 @@ public class AgentService {
         return repository.findAll();
     }
 
-    @Transactional
     public void update(Agent agent) {
         repository.update(agent);
     }
 
-    @Transactional
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }
 
-    @Transactional
     public void create(Agent agent) {
         agent.setPassword(passwordHash.generate(agent.getPassword().toCharArray()));
         repository.create(agent);

@@ -1,7 +1,6 @@
 package pl.edu.pg.eti.kask.agent.repository.persistence;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestScoped
+@Dependent
 public class AgentPersistenceRepository implements AgentRepository {
 
     private EntityManager em;

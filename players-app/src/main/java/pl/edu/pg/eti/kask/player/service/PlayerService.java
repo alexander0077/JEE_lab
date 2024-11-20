@@ -1,8 +1,8 @@
 package pl.edu.pg.eti.kask.player.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class PlayerService {
     private final PlayerRepository playerRepository;
@@ -44,7 +45,7 @@ public class PlayerService {
         return playerRepository.findAllByAgent(agent);
     }
 
-    @Transactional
+
     public void create(Player player) {
         if (playerRepository.find(player.getId()).isPresent()) {
             throw new IllegalArgumentException("Player already exists.");
@@ -54,20 +55,12 @@ public class PlayerService {
         }
 
         playerRepository.create(player);
-
-        /* Both sides of relationship must be handled (if accessed) because of cache. */
-//        professionRepository.find(character.getProfession().getId())
-//                .ifPresent(profession -> profession.getCharacters().add(character));
-//        userRepository.find(character.getUser().getId())
-//                .ifPresent(user -> user.getCharacters().add(character));
     }
 
-    @Transactional
     public void update(Player player) {
         playerRepository.update(player);
     }
 
-    @Transactional
     public void delete(UUID id) {
         playerRepository.delete(playerRepository.find(id).orElseThrow());
     }

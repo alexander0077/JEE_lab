@@ -1,11 +1,13 @@
-package pl.edu.pg.eti.kask.configuration.observer;
+package pl.edu.pg.eti.kask.configuration.singleton;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.control.RequestContextController;
-import jakarta.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import jakarta.enterprise.event.Observes;
-import jakarta.enterprise.context.Initialized;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.service.AgentService;
 import pl.edu.pg.eti.kask.player.entity.Player;
@@ -15,39 +17,36 @@ import pl.edu.pg.eti.kask.team.entity.Team;
 import pl.edu.pg.eti.kask.team.service.TeamService;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+@NoArgsConstructor
 public class InitializedData {
     
-    private final AgentService agentService;
-    private final PlayerService playerService;
-    private final TeamService teamService;
-    private final RequestContextController requestContextController;
+    private AgentService agentService;
+    private PlayerService playerService;
+    private TeamService teamService;
 
-    @Inject
-    public InitializedData(
-            AgentService agentService,
-            PlayerService playerService,
-            TeamService teamService,
-            RequestContextController requestContextController
-    ) {
-        this.agentService = agentService;
+    @EJB
+    public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    @EJB
+    public void setTeamService(TeamService teamService) {
         this.teamService = teamService;
-        this.requestContextController = requestContextController;
     }
 
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
+    @EJB
+    public void setAgentService(AgentService agentService) {
+        this.agentService = agentService;
     }
 
-
+    @PostConstruct
     @SneakyThrows
     private void init() {
-        requestContextController.activate();
-
         if (agentService.findAll().isEmpty()) {
             Agent raiola = Agent.builder()
                     .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
@@ -119,6 +118,7 @@ public class InitializedData {
                     .shirtNumber(9)
                     .position(PositionTypes.STRIKER)
                     .team(barcelona)
+                    .agent(raiola)
                     .build();
 
             Player yamal = Player.builder()
@@ -128,6 +128,7 @@ public class InitializedData {
                     .shirtNumber(19)
                     .position(PositionTypes.STRIKER)
                     .team(barcelona)
+                    .agent(zahavi)
                     .build();
 
             Player grealish = Player.builder()
@@ -137,6 +138,7 @@ public class InitializedData {
                     .shirtNumber(10)
                     .position(PositionTypes.MIDFIELDER)
                     .team(mancity)
+                    .agent(struth)
                     .build();
 
             Player walker = Player.builder()
@@ -146,6 +148,7 @@ public class InitializedData {
                     .shirtNumber(2)
                     .position(PositionTypes.DEFENDER)
                     .team(mancity)
+                    .agent(romano)
                     .build();
 
             teamService.create(barcelona);
@@ -156,8 +159,6 @@ public class InitializedData {
             playerService.create(grealish);
             playerService.create(walker);
         }
-
-        requestContextController.deactivate();
     }
 
     @SneakyThrows

@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.player.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Inject;
@@ -26,8 +27,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(force = true)
 public class PlayerCreate implements Serializable {
     
-    private final PlayerService playerService;
-    private final TeamService teamService;
+    private PlayerService playerService;
+    private TeamService teamService;
     private final ModelFunctionFactory factory;
 
     @Getter
@@ -40,16 +41,22 @@ public class PlayerCreate implements Serializable {
     
     @Inject
     public PlayerCreate(
-            PlayerService playerService,
-            TeamService teamService,
             ModelFunctionFactory factory,
             Conversation conversation
     ) {
-        this.playerService = playerService;
         this.factory = factory;
-        this.teamService = teamService;
         this.conversation = conversation;
     }
+
+    @EJB
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
+    }
+    @EJB
+    public void setTeamService(TeamService teamService) {
+        this.teamService = teamService;
+    }
+
 
     public void init() {
         if (conversation.isTransient()) {

@@ -1,18 +1,14 @@
 package pl.edu.pg.eti.kask.team.controller.rest;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.SneakyThrows;
 import pl.edu.pg.eti.kask.component.DtoFunctionFactory;
-import pl.edu.pg.eti.kask.player.controller.api.PlayerController;
-import pl.edu.pg.eti.kask.player.dto.PatchPlayerRequest;
-import pl.edu.pg.eti.kask.player.dto.PutPlayerRequest;
 import pl.edu.pg.eti.kask.team.controller.api.TeamController;
 import pl.edu.pg.eti.kask.team.dto.GetTeamResponse;
 import pl.edu.pg.eti.kask.team.dto.GetTeamsResponse;
@@ -23,7 +19,7 @@ import pl.edu.pg.eti.kask.team.service.TeamService;
 import java.util.UUID;
 @Path("")
 public class TeamRestController implements TeamController {
-    private final TeamService service;
+    private TeamService service;
     private final DtoFunctionFactory factory;
     private final UriInfo uriInfo;
     private HttpServletResponse response;
@@ -34,11 +30,15 @@ public class TeamRestController implements TeamController {
     }
 
     @Inject
-    public TeamRestController(TeamService service, DtoFunctionFactory factory,
+    public TeamRestController(DtoFunctionFactory factory,
                               @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo) {
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setService(TeamService service) {
+        this.service = service;
     }
 
     @Override

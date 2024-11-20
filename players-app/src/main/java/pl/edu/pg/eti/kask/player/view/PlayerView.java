@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.player.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Named
 public class PlayerView implements Serializable {
 
-    private final PlayerService service;
+    private PlayerService service;
 
     private final ModelFunctionFactory factory;
 
@@ -34,10 +35,15 @@ public class PlayerView implements Serializable {
 
 
     @Inject
-    public PlayerView(PlayerService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public PlayerView(ModelFunctionFactory factory) {
         this.factory = factory;
     }
+
+    @EJB
+    public void setService(PlayerService service) {
+        this.service = service;
+    }
+
 
     public void init() throws IOException {
         Optional<Player> player = service.find(id);

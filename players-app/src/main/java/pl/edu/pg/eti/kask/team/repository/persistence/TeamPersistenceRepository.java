@@ -1,6 +1,6 @@
 package pl.edu.pg.eti.kask.team.repository.persistence;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.Dependent;;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pl.edu.pg.eti.kask.team.repository.api.TeamRepository;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestScoped
+@Dependent
 public class TeamPersistenceRepository implements TeamRepository {
     private EntityManager em;
 

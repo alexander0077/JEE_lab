@@ -1,11 +1,11 @@
 package pl.edu.pg.eti.kask.team.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.team.entity.Team;
 import pl.edu.pg.eti.kask.team.repository.api.TeamRepository;
-import jakarta.transaction.Transactional;
 import lombok.extern.java.Log;
 
 import java.util.List;
@@ -13,7 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 @Log
 public class TeamService {
@@ -40,17 +41,14 @@ public class TeamService {
         return repository.findAll();
     }
 
-    @Transactional
     public void create(Team team) {
         repository.create(team);
     }
 
-    @Transactional
     public void update(Team team) {
         repository.update(team);
     }
 
-    @Transactional
     public void delete(Team team) {
         repository.delete(team);
     }
