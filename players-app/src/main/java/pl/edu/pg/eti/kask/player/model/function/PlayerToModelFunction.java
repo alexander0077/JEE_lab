@@ -16,6 +16,7 @@ public class PlayerToModelFunction implements Function<Player, PlayerModel>, Ser
                 .shirtNumber(entity.getShirtNumber())
                 .position(entity.getPosition())
                 .team(entity.getTeam().getName())
+                .agent(entity.getAgent().getName())
                 .build();
     }
 

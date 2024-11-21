@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import pl.edu.pg.eti.kask.agent.model.AgentModel;
 
 @Getter
 @Setter
@@ -21,4 +22,5 @@ public class PlayerEditModel {
     private String name;
     private int shirtNumber;
     private String position;
+    private AgentModel agent;
 }

@@ -16,6 +16,7 @@ public class UpdatePlayerWithRequestFunction implements BiFunction<Player, Patch
                 .shirtNumber(request.getShirtNumber())
                 .position(request.getPosition())
                 .team(entity.getTeam())
+                .agent(entity.getAgent())
                 .build();
     }
 

@@ -1,6 +1,8 @@
 package pl.edu.pg.eti.kask.component;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import pl.edu.pg.eti.kask.agent.model.function.AgentToModelFunction;
+import pl.edu.pg.eti.kask.agent.model.function.AgentsToModelFunction;
 import pl.edu.pg.eti.kask.player.model.function.*;
 import pl.edu.pg.eti.kask.player.model.function.TeamToModelFunction;
 import pl.edu.pg.eti.kask.team.model.function.TeamToViewModelFunction;
@@ -18,7 +20,7 @@ public class ModelFunctionFactory {
     }
 
     public PlayerToEditModelFunction playerToEditModel() {
-        return new PlayerToEditModelFunction();
+        return new PlayerToEditModelFunction(agentToModel());
     }
 
     public ModelToPlayerFunction modelToPlayer() {
@@ -41,5 +43,12 @@ public class ModelFunctionFactory {
         return new UpdatePlayerWithModelFunction();
     }
 
+    public AgentToModelFunction agentToModel() {
+        return new AgentToModelFunction();
+    }
+
+    public AgentsToModelFunction agentsToModel() {
+        return new AgentsToModelFunction();
+    }
 }
 

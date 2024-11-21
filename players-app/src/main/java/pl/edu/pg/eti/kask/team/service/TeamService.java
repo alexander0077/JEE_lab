@@ -1,11 +1,14 @@
 package pl.edu.pg.eti.kask.team.service;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.team.entity.Team;
 import pl.edu.pg.eti.kask.team.repository.api.TeamRepository;
+import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 import lombok.extern.java.Log;
 
 import java.util.List;
@@ -32,7 +35,8 @@ public class TeamService {
         return team;
 
     }
- 
+
+    @PermitAll
     public List<Team> findAll() {
         return repository.findAll();
     }
@@ -41,6 +45,7 @@ public class TeamService {
         return repository.findAll();
     }
 
+    @RolesAllowed(AgentRoles.ADMIN)
     public void create(Team team) {
         repository.create(team);
     }
@@ -49,6 +54,7 @@ public class TeamService {
         repository.update(team);
     }
 
+    @RolesAllowed(AgentRoles.ADMIN)
     public void delete(Team team) {
         repository.delete(team);
     }

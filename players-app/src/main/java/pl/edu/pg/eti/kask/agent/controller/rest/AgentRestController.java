@@ -1,11 +1,9 @@
 package pl.edu.pg.eti.kask.agent.controller.rest;
 
+import jakarta.ejb.EJBAccessException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.TransactionalException;
-import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
@@ -116,7 +114,13 @@ public class AgentRestController implements AgentController {
         service.find(id).ifPresentOrElse(
                 entity -> {
                     if (entity.getPortrait() != null) throw new BadRequestException("This agent already has portrait.");
-                    service.updatePortrait(id, portrait);
+                    try {
+                        service.updatePortrait(id, portrait);
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
+
                     response.setHeader("Location", uriInfo.getBaseUriBuilder()
                             .path(AgentController.class, "getAgentPortrait")
                             .build(id)

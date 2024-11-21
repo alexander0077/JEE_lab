@@ -88,7 +88,7 @@ public class PlayerCreate implements Serializable {
     }
 
     public String saveAction() {
-        playerService.create(factory.modelToPlayer().apply(player));
+        playerService.createForCallerPrincipal(factory.modelToPlayer().apply(player));
         conversation.end();
         return "/team/team_view.xhtml?faces-redirect=true&id=" + player.getTeam().getId();
     }

@@ -2,6 +2,7 @@ package pl.edu.pg.eti.kask.player.dto.function;
 
 import pl.edu.pg.eti.kask.player.dto.GetPlayerResponse;
 import pl.edu.pg.eti.kask.player.entity.Player;
+import pl.edu.pg.eti.kask.team.entity.Team;
 
 import java.util.UUID;
 import java.util.function.Function;
@@ -19,6 +20,10 @@ public class PlayerToResponseFunction implements Function<Player, GetPlayerRespo
                 .team(GetPlayerResponse.Team.builder()
                         .id(entity.getTeam().getId())
                         .name(entity.getTeam().getName())
+                        .build())
+                .agent(GetPlayerResponse.Agent.builder()
+                        .id(entity.getAgent().getId())
+                        .name(entity.getAgent().getName())
                         .build())
                 .build();
     }

@@ -29,7 +29,7 @@ public class PlayerList {
 
     public PlayersModel getPlayers() {
         if (players == null) {
-            players = factory.playersToModel().apply(service.findAll());
+            players = factory.playersToModel().apply(service.findAllForCallerPrincipal());
         }
         return players;
     }

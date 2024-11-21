@@ -1,4 +1,4 @@
-package pl.edu.pg.eti.kask.player.dto;
+package pl.edu.pg.eti.kask.agent.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -7,10 +7,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
-import pl.edu.pg.eti.kask.player.entity.PositionTypes;
-
+import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -19,21 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class GetPlayerResponse {
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    @ToString
-    @EqualsAndHashCode
-    public static class Team {
-
-        private UUID id;
-        private String name;
-
-    }
-
+public class AgentsModel implements Serializable {
     @Getter
     @Setter
     @Builder
@@ -43,14 +31,10 @@ public class GetPlayerResponse {
     @EqualsAndHashCode
     public static class Agent {
         private UUID id;
-        private String name;
+        private String login;
     }
 
-    private UUID id;
-    private String name;
-    private String surname;
-    private int shirtNumber;
-    private String position;
-    private Team team;
-    private Agent agent;
+    @Singular
+    private List<Agent> agents;
 }
+

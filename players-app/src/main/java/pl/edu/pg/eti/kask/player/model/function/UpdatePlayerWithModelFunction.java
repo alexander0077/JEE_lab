@@ -1,6 +1,8 @@
 package pl.edu.pg.eti.kask.player.model.function;
 
 import lombok.SneakyThrows;
+import pl.edu.pg.eti.kask.agent.entity.Agent;
+import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 import pl.edu.pg.eti.kask.player.entity.Player;
 import pl.edu.pg.eti.kask.player.model.PlayerEditModel;
 
@@ -11,15 +13,17 @@ public class UpdatePlayerWithModelFunction implements BiFunction<Player, PlayerE
 
     @Override
     @SneakyThrows
-    public Player apply(Player entity, PlayerEditModel request) {
+    public Player apply(Player entity, PlayerEditModel model) {
         return Player.builder()
                 .id(entity.getId())
-                .name(request.getName())
+                .name(model.getName())
                 .surname(entity.getSurname())
-                .shirtNumber(request.getShirtNumber())
-                .position(request.getPosition())
+                .shirtNumber(model.getShirtNumber())
+                .position(model.getPosition())
                 .team(entity.getTeam())
-                .agent(entity.getAgent())
+                .agent(Agent.builder()
+                        .id(model.getAgent().getId())
+                        .build())
                 .build();
     }
 

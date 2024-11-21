@@ -1,6 +1,8 @@
 package pl.edu.pg.eti.kask.player.controller.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -21,6 +23,7 @@ import pl.edu.pg.eti.kask.player.entity.Player;
 import pl.edu.pg.eti.kask.player.service.PlayerService;
 import pl.edu.pg.eti.kask.team.entity.Team;
 import pl.edu.pg.eti.kask.team.service.TeamService;
+import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -28,6 +31,7 @@ import java.util.logging.Level;
 
 @Path("")
 @Log
+@RolesAllowed(AgentRoles.USER)
 public class PlayerRestController implements PlayerController {
     private PlayerService service;
     private final TeamService teamService;
@@ -58,7 +62,12 @@ public class PlayerRestController implements PlayerController {
 
     @Override
     public GetPlayersResponse getPlayers() {
-        return factory.playersToResponse().apply(service.findAll());
+        try {
+            return factory.playersToResponse().apply(service.findAllForCallerPrincipal());
+        } catch (EJBAccessException ex) {
+            log.log(Level.WARNING, ex.getMessage(), ex);
+            throw new ForbiddenException(ex.getMessage());
+        }
     }
 
     @Override
@@ -98,7 +107,7 @@ public class PlayerRestController implements PlayerController {
             if(team.isEmpty()) throw new NotFoundException();
             Player newPlayer = factory.requestToPlayer().apply(id, request);
             newPlayer.setTeam(team.get());
-            service.create(newPlayer);
+            service.createForCallerPrincipal(newPlayer);
 
             response.setHeader("Location", uriInfo.getBaseUriBuilder()
                     .path(PlayerController.class, "getPlayer")
@@ -119,9 +128,15 @@ public class PlayerRestController implements PlayerController {
     public void patchPlayer(UUID teamId, UUID id, PatchPlayerRequest request) {
         service.find(id).ifPresentOrElse(
                 entity -> {
-                    if(!entity.getTeam().getId().equals(teamId)) throw new NotFoundException();
-                    service.update(factory.updatePlayer().apply(entity, request));
+                    try {
+                        if(!entity.getTeam().getId().equals(teamId)) throw new NotFoundException();
+                        service.update(factory.updatePlayer().apply(entity, request));
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
                 },
+
                 () -> {
                     throw new NotFoundException();
                 }
@@ -131,7 +146,15 @@ public class PlayerRestController implements PlayerController {
     @Override
     public void deletePlayer(UUID id) {
         service.find(id).ifPresentOrElse(
-                entity -> service.delete(id),
+                entity -> {
+                    try {
+                        service.delete(id);
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
+                },
+
                 () -> {
                     throw new NotFoundException();
                 }

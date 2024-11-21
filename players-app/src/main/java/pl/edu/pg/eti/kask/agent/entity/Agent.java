@@ -57,4 +57,9 @@ public class Agent implements Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private String portrait;
+
+    @CollectionTable(name = "agents__roles", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 }

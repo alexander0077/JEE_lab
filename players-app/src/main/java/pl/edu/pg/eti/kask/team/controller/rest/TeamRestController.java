@@ -1,6 +1,8 @@
 package pl.edu.pg.eti.kask.team.controller.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBAccessException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.*;
@@ -8,6 +10,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.SneakyThrows;
+import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 import pl.edu.pg.eti.kask.component.DtoFunctionFactory;
 import pl.edu.pg.eti.kask.team.controller.api.TeamController;
 import pl.edu.pg.eti.kask.team.dto.GetTeamResponse;
@@ -17,6 +20,8 @@ import pl.edu.pg.eti.kask.team.dto.PutTeamRequest;
 import pl.edu.pg.eti.kask.team.service.TeamService;
 
 import java.util.UUID;
+import java.util.logging.Level;
+
 @Path("")
 public class TeamRestController implements TeamController {
     private TeamService service;
@@ -43,7 +48,11 @@ public class TeamRestController implements TeamController {
 
     @Override
     public GetTeamsResponse getTeams() {
-        return factory.teamsToResponse().apply(service.findAll());
+        try {
+            return factory.teamsToResponse().apply(service.findAll());
+        } catch (EJBAccessException ex) {
+            throw new ForbiddenException(ex.getMessage());
+        }
     }
 
     @Override
@@ -53,14 +62,19 @@ public class TeamRestController implements TeamController {
                 .orElseThrow(NotFoundException::new);
     }
 
+
     @Override
     public void deleteTeam(UUID id) {
-        service.find(id).ifPresentOrElse(
-                service::delete,
-                () -> {
-                    throw new NotFoundException();
-                }
-        );
+        try {
+            service.find(id).ifPresentOrElse(
+                    service::delete,
+                    () -> {
+                        throw new NotFoundException();
+                    }
+            );
+        } catch (EJBAccessException ex) {
+            throw new ForbiddenException(ex.getMessage());
+        }
     }
 
     @Override
@@ -75,8 +89,11 @@ public class TeamRestController implements TeamController {
                     .toString());
 
             throw new WebApplicationException(Response.Status.CREATED);
+
         } catch (IllegalArgumentException ex) {
             throw new BadRequestException(ex);
+        } catch (EJBAccessException ex) {
+            throw new ForbiddenException(ex.getMessage());
         }
     }
 

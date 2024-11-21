@@ -1,3 +1,19 @@
+# Get all players. No credentials.
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/players
+
+###
+
+# Get all players. Wrong credentials.
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/players
+Authorization: Basic a2V2aW46d3JvbmdwYXNzd29yZA==
+
+###
+
+
 # Get all agents.
 
 GET http://localhost:9080/players-app/api/agents
@@ -91,7 +107,9 @@ DELETE http://localhost:9080/players-app/api/agents/6aee5e1d-bf0f-4936-85fd-9afc
 
 # Get all players.
 
+// @no-cookie-jar
 GET http://localhost:9080/players-app/api/players
+Authorization: Basic bWlubzEyMzptaW5vcGFzcw==
 
 ###
 
@@ -210,5 +228,195 @@ Content-Type: application/json
   "name": "KP Supra Kwidzyn",
   "budget": 60000
 }
+
+###
+
+# LAB 6 HERE
+
+# Create new team - user
+
+// @no-cookie-jar
+PUT http://localhost:9080/players-app/api/teams/18217a53-9dec-4f57-ab31-5c47e20f0261
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+Content-Type: application/json
+
+{
+  "name": "Supra Kwidzyn",
+  "budget": 50000,
+  "isProfessional": false
+}
+
+###
+
+# Create new team - admin
+
+// @no-cookie-jar
+PUT http://localhost:9080/players-app/api/teams/18217a53-9dec-4f57-ab31-5c47e20f0261
+Authorization: Basic bWlubzEyMzptaW5vcGFzcw==
+Content-Type: application/json
+
+{
+  "name": "Supra Kwidzyn",
+  "budget": 50000,
+  "isProfessional": false
+}
+
+###
+
+# Delete team - user
+
+// @no-cookie-jar
+DELETE http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+
+###
+
+# Delete team - admin
+
+// @no-cookie-jar
+DELETE http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262
+Authorization: Basic bWlubzEyMzptaW5vcGFzcw==
+
+###
+
+# Get all teams - not logged
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/teams
+
+###
+
+# Create new agent - not logged
+
+// @no-cookie-jar
+PUT http://localhost:9080/players-app/api/agents/3c6f1eb1-8069-44ab-988f-d7fed2b65d87
+Content-Type: application/json
+
+{
+  "login": "kuchar123",
+  "name": "Cezary",
+  "surname": "Kucharski",
+  "age": 56,
+  "active": true,
+  "email": "cez_kuch@example.com",
+  "password": "123123"
+}
+
+###
+
+# Get all players - user
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/players
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+
+###
+
+# Get all players - admin
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/players
+Authorization: Basic bWlubzEyMzptaW5vcGFzcw==
+
+###
+
+# Get agents player
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/players/4c603256-e157-41f2-87a6-f72e3fdc32b0
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+
+###
+
+# Delete some player - admin
+
+// @no-cookie-jar
+DELETE http://localhost:9080/players-app/api/players/f1398347-f46b-4ef8-ae75-aa1538e5c21f
+Authorization: Basic bWlubzEyMzptaW5vcGFzcw==
+
+###
+
+# Delete not authorized player
+
+// @no-cookie-jar
+DELETE http://localhost:9080/players-app/api/players/f1398347-f46b-4ef8-ae75-aa1538e5c21f
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+
+###
+
+# Delete users player
+
+// @no-cookie-jar
+DELETE http://localhost:9080/players-app/api/players/4c603256-e157-41f2-87a6-f72e3fdc32b0
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+
+###
+
+# Update some player - admin
+
+// @no-cookie-jar
+PATCH http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/f1398347-f46b-4ef8-ae75-aa1538e5c21f
+Authorization: Basic bWlubzEyMzptaW5vcGFzcw==
+Content-Type: application/json
+
+{
+  "name": "Yamal Junior",
+  "shirtNumber": 22,
+  "position": "midfielder"
+}
+
+###
+
+# Update not authorized player
+
+// @no-cookie-jar
+PATCH http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/f1398347-f46b-4ef8-ae75-aa1538e5c21f
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+Content-Type: application/json
+
+{
+  "name": "Yamal Junior",
+  "shirtNumber": 22,
+  "position": "midfielder"
+}
+
+###
+
+# Update users player
+
+// @no-cookie-jar
+PATCH http://localhost:9080/players-app/api/teams/3b999cd8-0f1e-4e20-935f-2a7a0a09475b/players/4c603256-e157-41f2-87a6-f72e3fdc32b0
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+Content-Type: application/json
+
+{
+  "name": "Jackson",
+  "shirtNumber": 99,
+  "position": "striker"
+}
+
+###
+
+# Create new player by agent (Volter)
+
+// @no-cookie-jar
+PUT http://localhost:9080/players-app/api/teams/a8217a53-9dec-4f57-ab31-5c47e20f0262/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
+Content-Type: application/json
+
+{
+  "name": "Wojciech",
+  "surname": "Szczęsny",
+  "shirtNumber": 25,
+  "position": "goalkeeper"
+}
+
+###
+
+# Get agents new created player
+
+// @no-cookie-jar
+GET http://localhost:9080/players-app/api/players/d676beab-7d6a-4b31-96f8-e6201ae2e56d
+Authorization: Basic YmVzdF9mb290YmFsbF9hZ2VudDpwYXNzd29yZDMyMQ==
 
 ###

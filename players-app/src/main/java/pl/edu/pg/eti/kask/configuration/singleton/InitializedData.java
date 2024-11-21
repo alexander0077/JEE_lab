@@ -1,14 +1,21 @@
 package pl.edu.pg.eti.kask.configuration.singleton;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RunAs;
+import jakarta.ejb.DependsOn;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
+import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 import pl.edu.pg.eti.kask.agent.service.AgentService;
 import pl.edu.pg.eti.kask.player.entity.Player;
 import pl.edu.pg.eti.kask.player.entity.PositionTypes;
@@ -17,17 +24,25 @@ import pl.edu.pg.eti.kask.team.entity.Team;
 import pl.edu.pg.eti.kask.team.service.TeamService;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 @Singleton
 @Startup
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 @NoArgsConstructor
+@DependsOn("InitializeAdminService")
+@DeclareRoles({AgentRoles.ADMIN, AgentRoles.USER})
+@RunAs(AgentRoles.ADMIN)
+@Log
 public class InitializedData {
     
     private AgentService agentService;
     private PlayerService playerService;
     private TeamService teamService;
+
+    @Inject
+    private SecurityContext securityContext;
 
     @EJB
     public void setPlayerService(PlayerService playerService) {
@@ -47,7 +62,7 @@ public class InitializedData {
     @PostConstruct
     @SneakyThrows
     private void init() {
-        if (agentService.findAll().isEmpty()) {
+        if (agentService.find("mino123").isEmpty()) {
             Agent raiola = Agent.builder()
                     .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
                     .login("mino123")
@@ -57,6 +72,7 @@ public class InitializedData {
                     .active(false)
                     .email("minoraiola@example.com")
                     .password("minopass")
+                    .roles(List.of(AgentRoles.ADMIN, AgentRoles.USER))
                     .build();
 
             Agent zahavi = Agent.builder()
@@ -68,6 +84,7 @@ public class InitializedData {
                     .active(true)
                     .email("pinizahavi@example.com")
                     .password("pinipass")
+                    .roles(List.of(AgentRoles.USER))
                     .build();
 
             Agent romano = Agent.builder()
@@ -79,6 +96,7 @@ public class InitializedData {
                     .active(true)
                     .email("fabrizio.romano@example.com")
                     .password("herewego")
+                    .roles(List.of(AgentRoles.USER))
                     .build();
 
             Agent struth = Agent.builder()
@@ -89,6 +107,7 @@ public class InitializedData {
                     .age(58)
                     .active(true)
                     .email("struth123@example.com")
+                    .roles(List.of(AgentRoles.USER))
                     .password("password321")
                     .build();
 
