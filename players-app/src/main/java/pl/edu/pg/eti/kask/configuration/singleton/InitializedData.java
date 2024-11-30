@@ -62,28 +62,28 @@ public class InitializedData {
     @PostConstruct
     @SneakyThrows
     private void init() {
-        if (agentService.find("mino123").isEmpty()) {
+        if (agentService.find("admin").isEmpty()) {
             Agent raiola = Agent.builder()
                     .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
-                    .login("mino123")
+                    .login("admin")
                     .name("Mino")
                     .surname("Raiola")
                     .age(57)
                     .active(false)
                     .email("minoraiola@example.com")
-                    .password("minopass")
+                    .password("admin")
                     .roles(List.of(AgentRoles.ADMIN, AgentRoles.USER))
                     .build();
 
             Agent zahavi = Agent.builder()
                     .id(UUID.fromString("b1c02c36-8af1-439d-8864-20ef79849482"))
-                    .login("pini123")
+                    .login("user")
                     .name("Pini")
                     .surname("Zahavi")
                     .age(82)
                     .active(true)
                     .email("pinizahavi@example.com")
-                    .password("pinipass")
+                    .password("user")
                     .roles(List.of(AgentRoles.USER))
                     .build();
 

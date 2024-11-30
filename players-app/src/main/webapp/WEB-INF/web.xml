@@ -29,32 +29,42 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
-<!--    <security-constraint>-->
-<!--        <web-resource-collection>-->
-<!--            <web-resource-name>player</web-resource-name>-->
-<!--            <url-pattern>/player/*</url-pattern>-->
-<!--        </web-resource-collection>-->
-<!--        <auth-constraint>-->
-<!--            <role-name>user</role-name>-->
-<!--        </auth-constraint>-->
-<!--    </security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>player</web-resource-name>
+            <url-pattern>/player/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
 
-<!--    <security-constraint>-->
-<!--        <web-resource-collection>-->
-<!--            <web-resource-name>agent</web-resource-name>-->
-<!--            <url-pattern>/agent/*</url-pattern>-->
-<!--        </web-resource-collection>-->
-<!--        <auth-constraint>-->
-<!--            <role-name>admin</role-name>-->
-<!--        </auth-constraint>-->
-<!--    </security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>team</web-resource-name>
+            <url-pattern>/team/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
 
-<!--    <security-role>-->
-<!--        <role-name>admin</role-name>-->
-<!--    </security-role>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>agent</web-resource-name>
+            <url-pattern>/agent/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
 
-<!--    <security-role>-->
-<!--        <role-name>user</role-name>-->
-<!--    </security-role>-->
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>user</role-name>
+    </security-role>
 
 </web-app>

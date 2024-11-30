@@ -46,7 +46,7 @@ public class PlayerView implements Serializable {
 
 
     public void init() throws IOException {
-        Optional<Player> player = service.find(id);
+        Optional<Player> player = service.findForCallerPrincipal(id);
         if (player.isPresent()) {
             this.player = factory.playerToModel().apply(player.get());
         } else {

@@ -14,4 +14,5 @@ public interface PlayerRepository extends Repository<Player, UUID>{
     Optional<Player> findByIdAndAgent(UUID id, Agent user);
     List<Player> findAllByAgent(Agent user);
     List<Player> findAllByTeam(Team profession);
+    List<Player> findAllByAgentAndByTeam(Agent agent, Team team);
 }

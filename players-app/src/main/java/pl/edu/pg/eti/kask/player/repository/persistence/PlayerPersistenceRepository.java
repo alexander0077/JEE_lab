@@ -75,4 +75,13 @@ public class PlayerPersistenceRepository implements PlayerRepository {
                 .getResultList();
 
     }
+
+    @Override
+    public List<Player> findAllByAgentAndByTeam(Agent agent, Team team) {
+        return em.createQuery("select p from Player p where p.team = :team and p.agent = :agent", Player.class)
+                .setParameter("team", team)
+                .setParameter("agent", agent)
+                .getResultList();
+
+    }
 }

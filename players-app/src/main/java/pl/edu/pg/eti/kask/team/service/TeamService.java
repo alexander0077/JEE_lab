@@ -36,7 +36,7 @@ public class TeamService {
 
     }
 
-    @PermitAll
+    @RolesAllowed(AgentRoles.USER)
     public List<Team> findAll() {
         return repository.findAll();
     }

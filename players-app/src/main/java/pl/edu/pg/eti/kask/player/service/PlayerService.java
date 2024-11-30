@@ -6,12 +6,14 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
 import pl.edu.pg.eti.kask.player.entity.Player;
 import pl.edu.pg.eti.kask.player.repository.api.PlayerRepository;
+import pl.edu.pg.eti.kask.team.entity.Team;
 import pl.edu.pg.eti.kask.team.repository.api.TeamRepository;
 
 import java.util.List;
@@ -67,6 +69,11 @@ public class PlayerService {
     }
 
     @RolesAllowed(AgentRoles.USER)
+    public List<Player> findAll(Agent agent, Team team) {
+        return playerRepository.findAllByAgentAndByTeam(agent, team);
+    }
+
+    @RolesAllowed(AgentRoles.USER)
     public List<Player> findAllForCallerPrincipal() {
         if (securityContext.isCallerInRole(AgentRoles.ADMIN)) {
             return findAll();
@@ -111,8 +118,16 @@ public class PlayerService {
 
     @RolesAllowed(AgentRoles.USER)
     public Optional<List<Player>> findAllByTeam(UUID id) {
-        return teamRepository.find(id)
-                .map(playerRepository::findAllByTeam);
+        if (securityContext.isCallerInRole(AgentRoles.ADMIN)) {
+            return teamRepository.find(id)
+                    .map(playerRepository::findAllByTeam);
+        }
+        Agent agent = agentRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                .orElseThrow(IllegalStateException::new);
+
+        Team team = teamRepository.find(id).orElseThrow(NotFoundException::new);
+
+        return Optional.of(this.findAll(agent, team));
     }
 
     @RolesAllowed(AgentRoles.USER)
