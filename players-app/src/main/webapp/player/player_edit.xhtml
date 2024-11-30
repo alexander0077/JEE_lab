@@ -18,7 +18,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="name" value="#{playerEdit.player.name}" styleClass="form-control"/>
-                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                            <h:outputLabel for="name" value="#{msg.name}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="shirtNumber" value="#{playerEdit.player.shirtNumber}" styleClass="form-control"/>
-                            <h:outputLabel for="shirtNumber" value="Shirt number:" styleClass="form-label"/>
+                            <h:outputLabel for="shirtNumber" value="#{msg.shirtNumber}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -36,18 +36,18 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="position" value="#{playerEdit.player.position}" styleClass="form-control"/>
-                            <h:outputLabel for="position" value="Position:" styleClass="form-label"/>
+                            <h:outputLabel for="position" value="#{msg.position}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Update"
+                        <h:commandButton styleClass="btn btn-primary" value="#{msg.update}"
                                          action="#{playerEdit.saveAction()}"/>
                     </div>
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" value="Cancel"
+                        <h:commandButton styleClass="btn btn-secondary" value="#{msg.cancel}"
                                          action="#{playerEdit.cancelAction()}"/>
                     </div>
                 </div>
