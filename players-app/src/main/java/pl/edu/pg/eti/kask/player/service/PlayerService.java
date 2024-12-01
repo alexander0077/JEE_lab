@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.agent.entity.AgentRoles;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
+import pl.edu.pg.eti.kask.interceptors.LoggingBinding;
 import pl.edu.pg.eti.kask.player.entity.Player;
 import pl.edu.pg.eti.kask.player.repository.api.PlayerRepository;
 import pl.edu.pg.eti.kask.team.entity.Team;
@@ -96,6 +97,7 @@ public class PlayerService {
     }
 
     @RolesAllowed(AgentRoles.USER)
+    @LoggingBinding
     public void createForCallerPrincipal(Player player) {
         Agent agent = agentRepository.findByLogin(securityContext.getCallerPrincipal().getName())
                 .orElseThrow(IllegalStateException::new);
@@ -105,12 +107,14 @@ public class PlayerService {
     }
 
     @RolesAllowed(AgentRoles.USER)
+    @LoggingBinding
     public void update(Player player) {
         checkAdminRoleOrOwner(playerRepository.find(player.getId()));
         playerRepository.update(player);
     }
 
     @RolesAllowed(AgentRoles.USER)
+    @LoggingBinding
     public void delete(UUID id) {
         checkAdminRoleOrOwner(playerRepository.find(id));
         playerRepository.delete(playerRepository.find(id).orElseThrow());
