@@ -54,12 +54,12 @@
 <!--                            <h:link styleClass="nav-link"-->
 <!--                                    outcome="/player/player_list.xhtml">Players</h:link>-->
 <!--                        </li>-->
-                        <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('user')}">
+<!--                        <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('user')}">-->
                             <li class="nav-item">
                                 <h:link styleClass="nav-link"
                                         outcome="/team/team_list.xhtml">#{msg.teams}</h:link>
                             </li>
-                        </h:panelGroup>
+<!--                        </h:panelGroup>-->
                         <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                             <li class="nav-item">
                                 <h:link styleClass="nav-link"

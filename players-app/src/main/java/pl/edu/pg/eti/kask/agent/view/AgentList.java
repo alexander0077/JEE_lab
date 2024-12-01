@@ -31,9 +31,10 @@ public class AgentList {
         return agents;
     }
     
-    public String deleteAction(AgentsModel.Agent agent) {
+    public void deleteAction(AgentsModel.Agent agent) {
         service.delete(agent.getId());
-        return "agent_list?faces-redirect=true";
+//        return "agent_list?faces-redirect=true";
+        agents = null;
     }
 
 }

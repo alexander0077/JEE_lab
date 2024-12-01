@@ -29,9 +29,10 @@ public class TeamList {
         return teams;
     }
 
-    public String deleteAction(TeamsModel.Team team) {
+    public void deleteAction(TeamsModel.Team team) {
         service.delete(service.find(team.getId()).get());
-        return "team_list?faces-redirect=true";
+//        return "team_list?faces-redirect=true";
+        teams=null;
     }
 
 }

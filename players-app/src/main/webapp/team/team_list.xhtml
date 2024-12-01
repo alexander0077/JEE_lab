@@ -9,7 +9,7 @@
         <article class="text--justified">
             <header><h2>#{msg.teams}</h2></header>
 
-            <h:dataTable value="#{teamList.teams.teams}" var="team"
+            <h:dataTable id="teamTable" value="#{teamList.teams.teams}" var="team"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
                     <f:facet name="header">#{msg.name}</f:facet>
@@ -34,7 +34,9 @@
                     <f:facet name="header">#{msg.delete}</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="#{msg.delete}"
-                                         action="#{teamList.deleteAction(team)}"/>
+                                         actionListener="#{teamList.deleteAction(team)}">
+                            <f:ajax execute="@this" render=":teamTable"/>
+                        </h:commandButton>
                     </h:form>
                 </h:column>
 

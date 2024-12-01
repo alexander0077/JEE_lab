@@ -59,9 +59,14 @@ public class TeamView implements Serializable {
         }
     }
 
-    public String deleteAction(UUID playerId) {
+    public void deleteAction(UUID playerId) {
         playerService.delete(playerId);
-        return "team_view?faces-redirect=true&id="+id;
+//        return "team_view?faces-redirect=true&id="+id;
+        team = null;
+        try {
+            init();
+        } catch (Exception e) {
+        }
     }
 
 }
