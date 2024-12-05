@@ -4,6 +4,9 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import pl.edu.pg.eti.kask.agent.repository.api.AgentRepository;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import java.util.List;
@@ -28,7 +31,11 @@ public class AgentPersistenceRepository implements AgentRepository {
 
     @Override
     public List<Agent> findAll() {
-        return em.createQuery("select a from Agent a", Agent.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Agent> query = cb.createQuery(Agent.class);
+        Root<Agent> root = query.from(Agent.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
@@ -50,9 +57,12 @@ public class AgentPersistenceRepository implements AgentRepository {
     @Override
     public Optional<Agent> findByLogin(String login) {
         try {
-            return Optional.of(em.createQuery("select a from Agent a where a.login = :login", Agent.class)
-                    .setParameter("login", login)
-                    .getSingleResult());
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Agent> query = cb.createQuery(Agent.class);
+            Root<Agent> root = query.from(Agent.class);
+            query.select(root);
+            return Optional.of(em.createQuery(query).getSingleResult());
+
         } catch (NoResultException ex) {
             return Optional.empty();
         }

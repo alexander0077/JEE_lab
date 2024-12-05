@@ -6,8 +6,12 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
 import pl.edu.pg.eti.kask.player.entity.Player;
+import pl.edu.pg.eti.kask.player.entity.Player_;
 import pl.edu.pg.eti.kask.player.repository.api.PlayerRepository;
 import pl.edu.pg.eti.kask.team.entity.Team;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +33,11 @@ public class PlayerPersistenceRepository implements PlayerRepository {
 
     @Override
     public List<Player> findAll() {
-        return em.createQuery("select p from Player p", Player.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
@@ -54,10 +62,16 @@ public class PlayerPersistenceRepository implements PlayerRepository {
     @Override
     public Optional<Player> findByIdAndAgent(UUID id, Agent agent) {
         try {
-            return Optional.of(em.createQuery("select p from Player p where p.id = :id and p.agent = :agent", Player.class)
-                    .setParameter("agent", agent)
-                    .setParameter("id", id)
-                    .getSingleResult());
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Player> query = cb.createQuery(Player.class);
+            Root<Player> root = query.from(Player.class);
+            query.select(root)
+                    .where(cb.and(
+                            cb.equal(root.get(Player_.agent), agent),
+                            cb.equal(root.get(Player_.id), id)
+                    ));
+            return Optional.of(em.createQuery(query).getSingleResult());
+
         } catch (NoResultException ex) {
             return Optional.empty();
         }
@@ -66,25 +80,35 @@ public class PlayerPersistenceRepository implements PlayerRepository {
 
     @Override
     public List<Player> findAllByAgent(Agent agent) {
-        return em.createQuery("select p from Player p where p.agent = :agent", Player.class)
-                .setParameter("agent", agent)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root)
+                .where(cb.equal(root.get(Player_.agent), agent));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public List<Player> findAllByTeam(Team team) {
-        return em.createQuery("select p from Player p where p.team = :team", Player.class)
-                .setParameter("team", team)
-                .getResultList();
-
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root)
+                .where(cb.equal(root.get(Player_.team), team));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public List<Player> findAllByAgentAndByTeam(Agent agent, Team team) {
-        return em.createQuery("select p from Player p where p.team = :team and p.agent = :agent", Player.class)
-                .setParameter("team", team)
-                .setParameter("agent", agent)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root)
+                .where(cb.and(
+                        cb.equal(root.get(Player_.agent), agent),
+                        cb.equal(root.get(Player_.team), team)
+                ));
 
+        return em.createQuery(query).getResultList();
     }
 }

@@ -5,6 +5,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pl.edu.pg.eti.kask.team.repository.api.TeamRepository;
 import pl.edu.pg.eti.kask.team.entity.Team;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +29,11 @@ public class TeamPersistenceRepository implements TeamRepository {
 
     @Override
     public List<Team> findAll() {
-        return em.createQuery("select t from Team t", Team.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Team> query = cb.createQuery(Team.class);
+        Root<Team> root = query.from(Team.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
