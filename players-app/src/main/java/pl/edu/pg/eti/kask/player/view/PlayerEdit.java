@@ -1,11 +1,14 @@
 package pl.edu.pg.eti.kask.player.view;
 
 import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.TransactionalException;
 import lombok.Getter;
 import lombok.Setter;
 import pl.edu.pg.eti.kask.player.entity.Player;
@@ -26,6 +29,7 @@ public class PlayerEdit implements Serializable {
     private PlayerService service;
     private final ModelFunctionFactory factory;
 
+    private final FacesContext facesContext;
 
     @Setter
     @Getter
@@ -35,8 +39,9 @@ public class PlayerEdit implements Serializable {
     private PlayerEditModel player;
 
     @Inject
-    public PlayerEdit(ModelFunctionFactory factory) {
+    public PlayerEdit(ModelFunctionFactory factory, FacesContext facesContext) {
         this.factory = factory;
+        this.facesContext = facesContext;
     }
 
     @EJB
@@ -53,11 +58,24 @@ public class PlayerEdit implements Serializable {
         }
     }
 
-    public String saveAction() {
-        service.update(factory.updatePlayer().apply(service.find(id).orElseThrow(), player));
-//        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-//        return viewId + "?faces-redirect=true&includeViewParams=true";
-        return "/player/player_view?id=" + id + "&faces-redirect=true";
+    public String saveAction() throws IOException {
+        PlayerEditModel playerState = player;
+        try {
+            service.update(factory.updatePlayer().apply(service.find(id).orElseThrow(), player));
+            return "/player/player_view?id=" + id + "&faces-redirect=true";
+        } catch (Exception ex) {
+            if (ex.getCause() instanceof OptimisticLockException) {
+                init();
+                String message = "UWAGA: Obiekt jest nieaktualny i nie można go zaktualizować.";
+                message += "Stan obiektu aktualnie w bazie:";
+                message += service.find(id).toString();
+                message += "\nJeżeli jesteś pewny ze chcesz edytować ten element, wybierz \'Zapisz\' ponownie";
+                facesContext.addMessage(null, new FacesMessage(message));
+                player = playerState;
+            }
+            return null ;
+        }
+
     }
 
     public String cancelAction() {

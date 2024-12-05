@@ -44,6 +44,19 @@
                 </h:column>
 
                 <h:column>
+                    <f:facet name="header">#{msg.version}</f:facet>
+                    <h:outputText value="#{player.version}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg.created}</f:facet>
+                    <h:outputText value="#{player.creationDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>
+                    </h:outputText>
+                </h:column>
+
+
+                <h:column>
                     <f:facet name="header">#{msg.view}</f:facet>
                     <h:link outcome="/player/player_view.xhtml" value="#{msg.view}">
                         <f:param name="id" value="#{player.id}"/>

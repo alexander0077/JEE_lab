@@ -23,4 +23,6 @@ public class PlayerEditModel {
     private int shirtNumber;
     private String position;
     private AgentModel agent;
+
+    private Long version;
 }

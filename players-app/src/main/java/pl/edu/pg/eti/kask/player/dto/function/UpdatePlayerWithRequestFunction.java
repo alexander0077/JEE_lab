@@ -17,6 +17,8 @@ public class UpdatePlayerWithRequestFunction implements BiFunction<Player, Patch
                 .position(request.getPosition())
                 .team(entity.getTeam())
                 .agent(entity.getAgent())
+                .version(request.getVersion())
+                .creationDateTime(entity.getCreationDateTime())
                 .build();
     }
 

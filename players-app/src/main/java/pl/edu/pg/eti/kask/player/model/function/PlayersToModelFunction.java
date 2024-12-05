@@ -15,6 +15,8 @@ public class PlayersToModelFunction implements Function<List<Player>, PlayersMod
                         .map(player -> PlayersModel.Player.builder()
                                 .id(player.getId())
                                 .name(player.getName())
+                                .version(player.getVersion())
+                                .creationDateTime(player.getCreationDateTime())
                                 .build())
                         .toList())
                 .build();

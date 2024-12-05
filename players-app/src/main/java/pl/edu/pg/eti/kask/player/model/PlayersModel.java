@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +35,9 @@ public class PlayersModel implements Serializable {
 
         private UUID id;
         private String name;
+        private Long version;
+        private LocalDateTime creationDateTime;
+
 
     }
 

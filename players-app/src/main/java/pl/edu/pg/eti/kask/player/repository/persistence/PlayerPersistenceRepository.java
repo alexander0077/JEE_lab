@@ -45,6 +45,9 @@ public class PlayerPersistenceRepository implements PlayerRepository {
 
     @Override
     public void update(Player entity) {
+        if (!em.isJoinedToTransaction()) {
+            em.joinTransaction();
+        }
         em.merge(entity);
     }
 

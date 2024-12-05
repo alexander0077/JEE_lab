@@ -21,6 +21,7 @@ public class PlayerToEditModelFunction implements Function<Player, PlayerEditMod
                 .shirtNumber(entity.getShirtNumber())
                 .position(entity.getPosition())
                 .agent(agentToModelFunction.apply(entity.getAgent()))
+                .version(entity.getVersion())
                 .build();
     }
 

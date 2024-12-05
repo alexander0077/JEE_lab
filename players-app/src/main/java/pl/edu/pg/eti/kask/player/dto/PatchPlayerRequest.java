@@ -22,4 +22,5 @@ public class PatchPlayerRequest {
     private String name;
     private int shirtNumber;
     private String position;
+    private Long version;
 }

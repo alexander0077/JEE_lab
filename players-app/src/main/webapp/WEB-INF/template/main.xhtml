@@ -34,7 +34,7 @@
                             #{msg.logged}: <h:outputText
                                 value="#{facesContext.externalContext.userPrincipal.name}"/>
                             <h:commandButton styleClass="btn btn-link" value="#{msg.logout}"
-                                             action="#{userLogout.logoutAction()}"/>
+                                             action="#{agentLogout.logoutAction()}"/>
                         </h:form>
                     </div>
                     <h:graphicImage width="50px" rendered="#{facesContext.viewRoot.locale.language == 'pl'}"

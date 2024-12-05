@@ -25,6 +25,7 @@ public class PlayerToResponseFunction implements Function<Player, GetPlayerRespo
                         .id(entity.getAgent().getId())
                         .name(entity.getAgent().getName())
                         .build())
+                .version(entity.getVersion())
                 .build();
     }
 

@@ -3,6 +3,7 @@ package pl.edu.pg.eti.kask.team.model;
 import lombok.*;
 import pl.edu.pg.eti.kask.player.model.PlayersModel;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,8 @@ public class TeamViewModel {
 
         private UUID id;
         private String name;
-
+        private Long version;
+        private LocalDateTime creationDateTime;
     }
 
     @Singular

@@ -5,6 +5,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.ws.rs.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.TransactionalException;
@@ -134,6 +135,10 @@ public class PlayerRestController implements PlayerController {
                     } catch (EJBAccessException ex) {
                         log.log(Level.WARNING, ex.getMessage(), ex);
                         throw new ForbiddenException(ex.getMessage());
+                    } catch (TransactionalException ex) {
+                        if (ex.getCause() instanceof OptimisticLockException) {
+                            throw new BadRequestException(ex.getCause());
+                        }
                     }
                 },
 

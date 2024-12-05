@@ -53,4 +53,5 @@ public class GetPlayerResponse {
     private String position;
     private Team team;
     private Agent agent;
+    private Long version;
 }

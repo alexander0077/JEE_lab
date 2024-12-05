@@ -25,4 +25,6 @@ public class PutPlayerRequest {
     private String surname;
     private int shirtNumber;
     private String position;
+
+    private Long version;
 }

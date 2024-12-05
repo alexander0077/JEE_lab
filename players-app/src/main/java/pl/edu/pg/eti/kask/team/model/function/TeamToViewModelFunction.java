@@ -17,6 +17,8 @@ public class TeamToViewModelFunction implements BiFunction<Team, List<Player>, T
                         .map(player -> TeamViewModel.Player.builder()
                                 .id(player.getId())
                                 .name(player.getName())
+                                .version(player.getVersion())
+                                .creationDateTime(player.getCreationDateTime())
                                 .build())
                         .toList())
                 .name(entity.getName())

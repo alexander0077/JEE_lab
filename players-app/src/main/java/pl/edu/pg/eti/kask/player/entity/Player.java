@@ -1,16 +1,10 @@
 package pl.edu.pg.eti.kask.player.entity;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import pl.edu.pg.eti.kask.agent.entity.Agent;
+import pl.edu.pg.eti.kask.entity.VersionAndCreationDateAuditable;
 import pl.edu.pg.eti.kask.team.entity.Team;
 
 import java.io.Serializable;
@@ -22,10 +16,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "players")
-public class Player implements Serializable {
+public class Player extends VersionAndCreationDateAuditable implements Serializable {
     @Id
     private UUID id;
     private String name;

@@ -21,6 +21,8 @@ public class UpdatePlayerWithModelFunction implements BiFunction<Player, PlayerE
                 .shirtNumber(model.getShirtNumber())
                 .position(model.getPosition())
                 .team(entity.getTeam())
+                .version(model.getVersion())
+                .creationDateTime(entity.getCreationDateTime())
                 .agent(Agent.builder()
                         .id(model.getAgent().getId())
                         .build())
