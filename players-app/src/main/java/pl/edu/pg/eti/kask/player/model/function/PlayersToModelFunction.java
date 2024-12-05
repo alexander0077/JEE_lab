@@ -17,6 +17,7 @@ public class PlayersToModelFunction implements Function<List<Player>, PlayersMod
                                 .name(player.getName())
                                 .version(player.getVersion())
                                 .creationDateTime(player.getCreationDateTime())
+                                .editionDateTime(player.getEditionDateTime())
                                 .build())
                         .toList())
                 .build();

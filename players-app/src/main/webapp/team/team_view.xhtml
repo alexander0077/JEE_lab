@@ -55,6 +55,12 @@
                     </h:outputText>
                 </h:column>
 
+                <h:column>
+                    <f:facet name="header">#{msg.updated}</f:facet>
+                    <h:outputText value="#{player.editionDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>
+                    </h:outputText>
+                </h:column>
 
                 <h:column>
                     <f:facet name="header">#{msg.view}</f:facet>

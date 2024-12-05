@@ -1,5 +1,6 @@
 package pl.edu.pg.eti.kask.entity;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -9,10 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Version;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -31,9 +28,17 @@ public class VersionAndCreationDateAuditable {
     @Column(name = "creation_date_time")
     private LocalDateTime creationDateTime;
 
+    @Column(name = "edition_date_time")
+    private LocalDateTime editionDateTime;
+
     @PrePersist
     public void updateCreationDateTime() {
         creationDateTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        editionDateTime = LocalDateTime.now();
     }
 }
 

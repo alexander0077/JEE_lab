@@ -37,6 +37,7 @@ public class PlayersModel implements Serializable {
         private String name;
         private Long version;
         private LocalDateTime creationDateTime;
+        private LocalDateTime editionDateTime;
 
 
     }

@@ -19,6 +19,7 @@ public class TeamToViewModelFunction implements BiFunction<Team, List<Player>, T
                                 .name(player.getName())
                                 .version(player.getVersion())
                                 .creationDateTime(player.getCreationDateTime())
+                                .editionDateTime(player.getEditionDateTime())
                                 .build())
                         .toList())
                 .name(entity.getName())

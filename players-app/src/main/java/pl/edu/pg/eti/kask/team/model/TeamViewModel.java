@@ -34,6 +34,7 @@ public class TeamViewModel {
         private String name;
         private Long version;
         private LocalDateTime creationDateTime;
+        private LocalDateTime editionDateTime;
     }
 
     @Singular
